@@ -1,6 +1,6 @@
 # gpslearn
 
-A new Flutter application.
+Learning about applications of geolocator dependency in flutter.
 
 ## Getting Started
 
