@@ -13,7 +13,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _position;
   String _address;
-  var _speedInMps = "0.0";
+  double _speed = 0.0;
   LocationOptions _locationOptions = LocationOptions(
     accuracy: LocationAccuracy.bestForNavigation,
     distanceFilter: 0,
@@ -33,9 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
       print(e);
     });
     geolocator.getPositionStream(_locationOptions).listen((Position position) {
-      _speedInMps = "${position.speed}";
+      _speed = double.parse("${position.speed}")*3.6;
     });
-    print(_speedInMps);
+    print(_speed);
     setState(() {});
   }
 
@@ -83,9 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //Text(_speedInMps),
+            //Text(_speed),
             if (_position != null)
-              Text("(${_position.latitude}\t,\t${_position.longitude})\n"+_address+"\n${_position.speed}"),
+              Text("(${_position.latitude}\t,\t${_position.longitude})\n\n\n"+_address+"\n\n\n"+_speed.toStringAsFixed(3)),
           ],
         ),
       ),
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Position _position;
   String _address;
-  var _speedInMps,_heading;
+  var _speed,_heading;
   LocationOptions _locationOptions = LocationOptions(
     accuracy: LocationAccuracy.bestForNavigation,
     distanceFilter: 0,
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             //_getSpeed(),
-            Text(_speedInMps+"\t\t\t"+_heading),
+            Text(_speed+"\t\t\t"+_heading),
             if (_position != null)
               Text("(${_position.latitude}\t,\t${_position.longitude})\n"+_address+"\n${_position.speed}"),
             FlatButton(
@@ -162,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _getSpeed() {
     geolocator.getPositionStream(_locationOptions).listen((Position position) {
       _heading = "${position.heading}";
-      _speedInMps = "${position.speed}";
+      _speed = "${position.speed}";
     });
   }
 
